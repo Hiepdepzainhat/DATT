@@ -18,19 +18,19 @@ namespace DA_TT_Share.Context
         public LapTopDbContext(DbContextOptions options) : base(options)
 		{
 		}
-		public virtual GioHangItem GioHangItem { get; set; }
-		public virtual DonHangChiTiet ChiTietDonHang { get; set; }
-		public virtual DanhMuc DanhMuc { get; set; }
-		public virtual NguoiDung NguoiDung { get; set; }
-		public virtual GioHang GioHang { get; set; }
-		public virtual SanPham SanPham { get; set; }
-		public virtual LienHe LienHe { get; set; }
-		public virtual Voucher Voucher { get; set; }
-		public virtual DonHang DonHang { get; set; }
-		public virtual HangSanXuat HangSanXuat { get; set; }
-		public virtual ChucVu ChucVu { get; set; }
-		public virtual Voucher_NguoiDung Voucher_NguoiDung { get; set; }
-		public virtual Coupon Coupon { get; set; }	
+		public virtual DbSet<GioHangItem> GioHangItem { get; set; }
+		public virtual DbSet<DonHangChiTiet> ChiTietDonHang { get; set; }
+		public virtual DbSet<DanhMuc> DanhMuc { get; set; }
+		public virtual DbSet<NguoiDung> NguoiDung { get; set; }
+		public virtual DbSet<GioHang> GioHang { get; set; }
+		public virtual DbSet<SanPham> SanPham { get; set; }
+		public virtual DbSet<LienHe> LienHe { get; set; }
+		public virtual DbSet<Voucher> Voucher { get; set; }
+		public virtual DbSet<DonHang> DonHang { get; set; }
+		public virtual DbSet<HangSanXuat> HangSanXuat { get; set; } = null;
+		public virtual DbSet<ChucVu> ChucVu { get; set; }
+		public virtual DbSet<Voucher_NguoiDung> Voucher_NguoiDung { get; set; }
+		public virtual DbSet<Coupon> Coupon { get; set; }	
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
