@@ -23,7 +23,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateHangSX(string ten, string mota)
+		public async Task<bool> CreateChucVu(string ten, string mota)
 		{
 			var lstChucVu = await irespon.GetAll();
 			var ChucVuCheck = lstChucVu.FirstOrDefault(x => x.TenChucVu == ten);
@@ -39,7 +39,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.CreateItem(ChucVu);
 		}
 		[HttpPut("[Action]/{id}")]
-		public async Task<bool> UpdateHangSX(Guid id, [FromBody] ChucVu dm)
+		public async Task<bool> UpdateChucVu(Guid id, [FromBody] ChucVu dm)
 		{
 			var lstChucVu = await irespon.GetAll();
 			var ChucVu = lstChucVu.FirstOrDefault(x => x.Id == id);
@@ -56,7 +56,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.UpdateItem(ChucVu);
 		}
 		[HttpDelete("[Action]/{id}")]
-		public async Task<bool> DeleteHangSX(Guid id)
+		public async Task<bool> DeleteChucVu(Guid id)
 		{
 			var lstChucVu = await irespon.GetAll();
 			var ChucVu = lstChucVu.FirstOrDefault(x => x.Id == id);

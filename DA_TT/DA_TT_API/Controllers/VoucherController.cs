@@ -43,7 +43,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.CreateItem(Voucher);
 		}
 		[HttpPut("[Action]/{id}")]
-		public async Task<bool> UpdateHangSX(Guid id, [FromBody] Voucher cp)
+		public async Task<bool> UpdateVoucher(Guid id, [FromBody] Voucher cp)
 		{
 			var lstVoucher = await irespon.GetAll();
 			var Voucher = lstVoucher.FirstOrDefault(x => x.Id == id);
@@ -64,7 +64,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.UpdateItem(Voucher);
 		}
 		[HttpDelete("[Action]/{id}")]
-		public async Task<bool> DeleteHangSX(Guid id)
+		public async Task<bool> DeleteVoucher(Guid id)
 		{
 			var lstVoucher = await irespon.GetAll();
 			var Voucher = lstVoucher.FirstOrDefault(x => x.Id == id);

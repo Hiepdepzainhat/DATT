@@ -23,7 +23,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateHangSX(string ten, int phantramgiam, DateTime ngaydb, DateTime ngaykt)
+		public async Task<bool> CreateCoupon(string ten, int phantramgiam, DateTime ngaydb, DateTime ngaykt)
 		{
 			var lstCoupon = await irespon.GetAll();
 			var CouponCheck = lstCoupon.FirstOrDefault(x => x.TenCoupon == ten);
@@ -41,7 +41,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.CreateItem(Coupon);
 		}
 		[HttpPut("[Action]/{id}")]
-		public async Task<bool> UpdateHangSX(Guid id, [FromBody] Coupon cp)
+		public async Task<bool> UpdateCoupon(Guid id, [FromBody] Coupon cp)
 		{
 			var lstCoupon = await irespon.GetAll();
 			var Coupon = lstCoupon.FirstOrDefault(x => x.Id == id);
@@ -60,7 +60,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.UpdateItem(Coupon);
 		}
 		[HttpDelete("[Action]/{id}")]
-		public async Task<bool> DeleteHangSX(Guid id)
+		public async Task<bool> DeleteCoupon(Guid id)
 		{
 			var lstCoupon = await irespon.GetAll();
 			var Coupon = lstCoupon.FirstOrDefault(x => x.Id == id);
