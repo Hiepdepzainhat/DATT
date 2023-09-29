@@ -23,7 +23,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateHangSX(string ten, string mota)
+		public async Task<bool> CreateDanhMuc(string ten, string mota)
 		{
 			var lstDanhMuc = await irespon.GetAll();
 			var danhmucCheck = lstDanhMuc.FirstOrDefault(x => x.Ten == ten);
@@ -39,7 +39,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.CreateItem(danhmuc);
 		}
 		[HttpPut("[Action]/{id}")]
-		public async Task<bool> UpdateHangSX(Guid id, [FromBody] DanhMuc dm)
+		public async Task<bool> UpdateDanhMuc(Guid id, [FromBody] DanhMuc dm)
 		{
 			var lstdanhmuc = await irespon.GetAll();
 			var danhmuc = lstdanhmuc.FirstOrDefault(x => x.Id == id);
@@ -56,7 +56,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.UpdateItem(danhmuc);
 		}
 		[HttpDelete("[Action]/{id}")]
-		public async Task<bool> DeleteHangSX(Guid id)
+		public async Task<bool> DeleteDanhMuc(Guid id)
 		{
 			var lstdanhmuc = await irespon.GetAll();
 			var danhmuc = lstdanhmuc.FirstOrDefault(x => x.Id == id);
