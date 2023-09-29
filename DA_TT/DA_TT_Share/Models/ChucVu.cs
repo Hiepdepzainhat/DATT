@@ -12,6 +12,7 @@ namespace DA_TT_Share.Models
 		[Key]
         public Guid Id { get; set; }
         public string? TenChucVu { get; set; }
+        public string? Mota { get; set; }
         public int? TrangThai { get; set; }
         public virtual List<NguoiDung> ? NguoiDungs {  get; set; }
     }
