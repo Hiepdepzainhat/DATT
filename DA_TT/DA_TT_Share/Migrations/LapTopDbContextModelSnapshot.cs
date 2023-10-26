@@ -133,6 +133,10 @@ namespace DA_TT_Share.Migrations
                     b.Property<string>("SDTNhanHang")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("TienShip")
+                        .IsRequired()
+                        .HasColumnType("decimal(8,0)");
+
                     b.Property<decimal?>("TongTien")
                         .IsRequired()
                         .HasColumnType("decimal(8,0)");
@@ -171,6 +175,9 @@ namespace DA_TT_Share.Migrations
                     b.Property<int?>("Soluong")
                         .IsRequired()
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("TongTien")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -284,9 +291,6 @@ namespace DA_TT_Share.Migrations
                         .HasColumnType("DateTime");
 
                     b.Property<string>("NoiDungLienHe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NoiDungNguoiDung")
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("NoiDungTraLoi")
