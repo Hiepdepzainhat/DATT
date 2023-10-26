@@ -15,6 +15,7 @@ namespace DA_TT_Share.Models
 		public Guid? IdSanPham { get; set; }
 		public int? Soluong { get; set; }
 		public decimal? DonGia { get; set; } 
+		public decimal? TongTien { get; set; } 
         public virtual DonHang? DonHang { get; set; }
         public virtual SanPham? SanPham { get; set; } 
     }

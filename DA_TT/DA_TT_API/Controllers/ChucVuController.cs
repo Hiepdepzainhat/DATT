@@ -52,8 +52,9 @@ namespace DA_TT_API.Controllers
 				ChucVu.TenChucVu = dm.TenChucVu;
 				ChucVu.Mota = dm.Mota;
 				ChucVu.TrangThai = dm.TrangThai;
+				return await irespon.UpdateItem(ChucVu);
 			}
-			return await irespon.UpdateItem(ChucVu);
+			
 		}
 		[HttpDelete("[Action]/{id}")]
 		public async Task<bool> DeleteChucVu(Guid id)

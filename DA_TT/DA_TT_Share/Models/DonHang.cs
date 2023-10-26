@@ -17,6 +17,7 @@ namespace DA_TT_Share.Models
         public DateTime? NgayGiaoHang { get; set; }
         public DateTime? NgayNhanHang { get; set; }
         public string? SDTNhanHang { get; set; }
+        public decimal? TienShip { get; set; }
         public decimal? TongTien { get; set; }
         public int? TrangThai { get; set; }
         public Guid? IdNguoiNhan { get; set; }

@@ -21,6 +21,7 @@ namespace DA_TT_Share.Configuration
 			builder.Property(x => x.NgayGiaoHang).HasColumnType("Date").IsRequired();
 			builder.Property(x => x.NgayNhanHang).HasColumnType("Date").IsRequired();
 			builder.Property(x => x.TrangThai).HasColumnType("int").IsRequired();
+			builder.Property(x => x.TienShip).HasColumnType("decimal(8,0)").IsRequired();
 			builder.Property(x => x.TongTien).HasColumnType("decimal(8,0)").IsRequired();
 
 			builder.HasOne(x => x.Voucher).WithMany(x => x.DonHangs).HasForeignKey(x => x.IdVoucher);

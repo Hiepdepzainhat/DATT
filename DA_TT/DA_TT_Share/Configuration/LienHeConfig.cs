@@ -15,7 +15,7 @@ namespace DA_TT_Share.Configuration
 		{
 			builder.ToTable("LienHe");
 			builder.HasKey(x => x.Id);
-			builder.Property(x => x.NoiDungNguoiDung).HasColumnType("nvarchar(1000)");
+			builder.Property(x => x.NoiDungLienHe).HasColumnType("nvarchar(1000)");
 			builder.Property(x => x.NgayLienHe).HasColumnType("DateTime");
 			builder.Property(x => x.NgayTraLoi).HasColumnType("DateTime");
 			builder.Property(x => x.NoiDungTraLoi).HasColumnType("nvarchar(1000)");

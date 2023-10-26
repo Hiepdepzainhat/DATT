@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Page</title>
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css">
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="laptop-outline"></ion-icon></span>
+                        <span class="title">Admin Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="DanhSachLapTop" asp-controller="Laptop" asp-area="Admin">
+                        <span class="icon"><ion-icon name="laptop"></ion-icon></span>
+                        <span class="title">Loptop Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="key-outline"></ion-icon></span>
+                        <span class="title">Account</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="DanhSachNguoiDung" asp-controller="NguoiDung" asp-area="Admin">
+                        <span class="icon"><ion-icon name="accessibility-outline"></ion-icon></span>
+                        <span class="title">User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                        <span class="title">Employee</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="airplane-outline"></ion-icon></span>
+                        <span class="title">Shipper</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="DanhSachDonHang" asp-controller="DonHangAdmin"  asp-area="Admin">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Đơn Hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="DanhSachVoucher" asp-controller="Voucher" asp-area="Admin">
+                        <span class="icon"><ion-icon name="film-outline"></ion-icon></span>
+                        <span class="title">Voucher</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="ListDanhMuc" asp-controller="DanhMuc" asp-area="Admin">
+                        <span class="icon"><ion-icon name="list-outline"></ion-icon></span>
+                        <span class="title">Danh Mục</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="call-outline"></ion-icon></span>
+                        <span class="title">Liên Hệ</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="AllCouponManager" asp-controller="Coupon" asp-area="Admin">
+                        <span class="icon"><ion-icon name="diamond-outline"></ion-icon></span>
+                        <span class="title">Coupon</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="DanhSachHangSanXuat" asp-controller="HangSanXuat" asp-area="Admin">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Hãng</span>
+                    </a>
+                </li>
+               
+
+            </ul>
+        </div>
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu"></ion-icon>
+                </div>
+                <!--Search-->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Nhập tên sản phẩm">
+                        <ion-icon name="search"></ion-icon>
+                    </label>
+                </div>
+                <!--User Img-->
+                <div class="user">
+                    <img src="user.jpg">
+                </div>
+            </div>
+            <!--Cards-->
+            
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        //Menu toggle
+        let toggle = document.querySelector('.toggle');
+        let navigation = document.querySelector('.navigation');
+        let main = document.querySelector('.main');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+
+        }
+        // add hovered class
+        let list = document.querySelectorAll('.navigation li');
+        function activeLink(){
+            list.forEach((item) =>
+            item.classList.remove('hovered'));
+            this.classList.add('hovered');
+        }
+        list.forEach((item) =>
+        item.addEventListener('mouseover',activeLink));
+    </script>
+        <script href="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    </div>
+</body>
+</html>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DA_TT_API.Controllers
 {
-	[Route("api/HanSanXuat")]
+	[Route("api/HangSanXuat")]
 	[ApiController]
 	public class HangSanXuatController : ControllerBase
 	{

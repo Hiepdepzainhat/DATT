@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DA_TT_Share.Models.Coupon>
+
+@{
+    ViewData["Title"] = "AllCouponManager";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<h1>Danh Sách Sale</h1>
+
+<p>
+    <a asp-action="CreateCoupon" class="btn btn-primary">Create New</a>
+</p>
+<table class="table" id="tb_coupon">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.PhanTramGiam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenCoupon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayBatDau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayKetThuc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrangThai)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.PhanTramGiam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenCoupon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayBatDau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayKetThuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+                <td>
+                    <a asp-action="CouponDetail" asp-controller="Coupon" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" /><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" /></svg>
+                    </a>
+                    <a asp-action="UpdateCoupon" asp-controller="Coupon" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" /></svg>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*Link datatable*@
+<link href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Khởi tạo DataTable
+        var dataTable = $('#tb_coupon').DataTable();
+    });
+</script>
