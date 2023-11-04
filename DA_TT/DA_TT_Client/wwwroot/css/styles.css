@@ -19,13 +19,11 @@ body
     min-height: 100vh;
     overflow-x: hidden;
 }
-.container{
+.containers{
     position: relative;
     width: 100%;
 }
-.navigation.active{
-    width: 80px;
-}
+
 .navigation{
     position: fixed;
     width: 300px;
@@ -35,6 +33,9 @@ body
     transition: 0.5s;
     overflow: hidden;
 }
+    .navigation.active {
+        width: 0px;
+    }
 .navigation ul{
     position: absolute;
     top: 0;

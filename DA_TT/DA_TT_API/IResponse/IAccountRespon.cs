@@ -7,6 +7,7 @@ namespace DA_TT_API.IResponse
 		Task<bool> RegisterCustomer(string hoten,string image, int gioitinh, string Email, string matkhau,string sdt, DateTime ngaysinh);
 		Task<bool> RegisterShipper(string hoten, string image, int gioitinh, string Email, string matkhau, string sdt, DateTime ngaysinh);
         Task<bool> RegisterAdmin(string hoten, string image, int gioitinh, string Email, string matkhau, string sdt, DateTime ngaysinh);
+        Task<bool> RegisterEmployee(string hoten, string image, int gioitinh, string Email, string matkhau, string sdt, DateTime ngaysinh);
         Task<NguoiDung> Login(string Email, string matkhau);
 	}
 }

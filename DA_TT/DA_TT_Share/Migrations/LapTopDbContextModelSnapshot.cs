@@ -387,6 +387,9 @@ namespace DA_TT_Share.Migrations
                     b.Property<Guid?>("IdHangSX")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ManHinh")
                         .HasColumnType("nvarchar(100)");
 

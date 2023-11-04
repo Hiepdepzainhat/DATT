@@ -34,7 +34,7 @@ namespace DA_TT_Share.Context
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Data Source=LAPTOP-DAV1LO0Q\\SQLEXPRESS;Initial Catalog=ShopLapTop;Integrated Security=True;");
+			optionsBuilder.UseSqlServer("Data Source=LAPTOP-DAV1LO0Q\\SQLEXPRESS;Initial Catalog=DATT_ShopLapTop;Integrated Security=True;");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

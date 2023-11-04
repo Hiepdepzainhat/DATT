@@ -4,6 +4,7 @@ using DA_TT_Share.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
 
 namespace DA_TT_Client.Controllers
 {
@@ -32,7 +33,15 @@ namespace DA_TT_Client.Controllers
 			var responND = await _httpClient.GetAsync(url);
 			string apiData = await responND.Content.ReadAsStringAsync();
 			var lstnd = JsonConvert.DeserializeObject<List<NguoiDung>>(apiData);
-			if(lstnd == null)
+            string urlCV = $"https://localhost:7290/api/ChucVu/GetAllChucVu";
+            var responCV = await _httpClient.GetAsync(urlCV);
+            string dataCV = await responCV.Content.ReadAsStringAsync();
+            var lstcv = JsonConvert.DeserializeObject<List<ChucVu>>(dataCV);
+            var cvCustomer = lstcv.FirstOrDefault(x => x.TenChucVu == "Customer");
+            var cvAdmin = lstcv.FirstOrDefault(x => x.TenChucVu == "Admin");
+            var cvEmployee = lstcv.FirstOrDefault(x => x.TenChucVu == "Employee");
+            var cvShipper = lstcv.FirstOrDefault(x => x.TenChucVu == "Shipper");
+            if (lstnd == null)
 			{
 				TempData["Đéo ổn"] = "Danh Sách Người Dùng Méo Có Ai";
 				return NotFound();
@@ -47,23 +56,28 @@ namespace DA_TT_Client.Controllers
 				}
 				else
 				{
-					if (nd.IdChucVu == Guid.Parse("F1260239-2A91-47D1-A4F4-F7B354C3E670"))
+					if(nd.TrangThai != 1)
+					{
+                        TempData["Login False KhoaTK"] = "Tài Khoản của bạn đã bị khóa, vui lòng liên hệ Admin hoặc nhân viên để biết thêm thông tin chi tiết";
+                        return View();
+					}
+				 	if (nd.IdChucVu == cvAdmin.Id)
 					{
 						return RedirectToAction("Index", "AdminHome", new { area = "Admin" });
 					}
-					else if (nd.IdChucVu == Guid.Parse("303053A2-9BA0-4A31-926A-9CFF1F0DD132"))
+					else if (nd.IdChucVu == cvCustomer.Id)
 					{
-						TempData["Login Sai"] = "Bạn đã đăng nhập bằng tài khoản User";
+						
 						return RedirectToAction("Index", "CustomerHome", new {area = "Customer"});
 					}
-					else if (nd.IdChucVu == Guid.Parse("37A44A14-BB52-40C1-BE65-ED05B5283364"))
+					else if (nd.IdChucVu == cvShipper.Id)
 					{
-                        TempData["Login Sai"] = "Bạn đã đăng nhập bằng tài khoản Shipper";
+                        
 						return RedirectToAction("Index","ShipperHome",new {area = "Shipper"});
                     }
-                    else if (nd.IdChucVu == Guid.Parse("D3A4193C-2FB9-4ED4-89EE-0E7216099FF8"))
+                    else if (nd.IdChucVu == cvEmployee.Id)
                     {
-                        TempData["Login Sai"] = "Bạn đã đăng nhập bằng tài khoản Nhân Viên";
+                        
                         return RedirectToAction("Index", "EmployeeHome", new { area = "Employee" });
                     }
 					else
@@ -75,14 +89,30 @@ namespace DA_TT_Client.Controllers
 				
 			}
 		}
-		public IActionResult Register()
-		{
-			return View();
-		}
+		
 		public IActionResult RegisterCustomer()
 		{
 			return View();
 		}
+		[HttpPost]
+		public async Task<IActionResult> RegisterCustomer(RegisterViewModels rgt )
+		{
+           
+            string urlCV = $"https://localhost:7290/api/ChucVu/GetAllChucVu";
+            var responCV = await _httpClient.GetAsync(urlCV);
+            string dataCV = await responCV.Content.ReadAsStringAsync();
+            var lstcv = JsonConvert.DeserializeObject<List<ChucVu>>(dataCV);
+            var cvCustomer = lstcv.FirstOrDefault(x => x.TenChucVu == "Customer");
+			rgt.Image = "user1.jpg";
+			string urlAPI = $"https://localhost:7290/api/NguoiDung/RegisterCustomer?hoten={rgt.hoTen}&image={rgt.Image}&gioitinh={rgt.GioiTinh}&Email={rgt.Email}&matkhau={rgt.MatKhau}&sdt={rgt.SDT}&ngaysinh={rgt.NgaySinh}";
+            var content = new StringContent(JsonConvert.SerializeObject(rgt), Encoding.UTF8, "application/json");
+            var respon = await _httpClient.PostAsync(urlAPI, content);
+            if (!respon.IsSuccessStatusCode)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction("Login", "Home");
+        }
 		public IActionResult RegisterShipper()
 		{
 			return View();

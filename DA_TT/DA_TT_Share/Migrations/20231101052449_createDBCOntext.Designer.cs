@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DA_TT_Share.Migrations
 {
     [DbContext(typeof(LapTopDbContext))]
-    [Migration("20231009005536_ekekeke")]
-    partial class ekekeke
+    [Migration("20231101052449_createDBCOntext")]
+    partial class createDBCOntext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,6 +178,9 @@ namespace DA_TT_Share.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<decimal?>("TongTien")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdDonHang");
@@ -290,9 +293,6 @@ namespace DA_TT_Share.Migrations
                         .HasColumnType("DateTime");
 
                     b.Property<string>("NoiDungLienHe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NoiDungNguoiDung")
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("NoiDungTraLoi")
@@ -388,6 +388,9 @@ namespace DA_TT_Share.Migrations
 
                     b.Property<Guid?>("IdHangSX")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ManHinh")
                         .HasColumnType("nvarchar(100)");

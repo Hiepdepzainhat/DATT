@@ -25,7 +25,16 @@ namespace DA_TT_Client.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var lstKH = lstnd.Where(x => x.IdChucVu == Guid.Parse("303053A2-9BA0-4A31-926A-9CFF1F0DD132")).ToList();
+            string urlCV = $"https://localhost:7290/api/ChucVu/GetAllChucVu";
+            var responCV = await _httpClient.GetAsync(urlCV);
+            string dataCV = await responCV.Content.ReadAsStringAsync();
+            var lstcv = JsonConvert.DeserializeObject<List<ChucVu>>(dataCV);
+            var cvND = lstcv.FirstOrDefault(x => x.TenChucVu == "Customer");
+            if (cvND == null)
+            {
+                return NotFound();
+            }
+            var lstKH = lstnd.Where(x => x.IdChucVu == cvND.Id).ToList();
             if(lstKH == null)
             {
                 return NotFound();
