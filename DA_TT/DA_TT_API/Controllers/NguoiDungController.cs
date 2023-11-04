@@ -14,11 +14,13 @@ namespace DA_TT_API.Controllers
 	public class NguoiDungController : ControllerBase
 	{
 		private readonly IAllResponsitories<NguoiDung> irespon;
+		private readonly IAllResponsitories<ChucVu> iresponCV;
 		private readonly IAccountRespon response;
 		LapTopDbContext context = new LapTopDbContext();
         public NguoiDungController()
         {
 			irespon = new AllResponsitories<NguoiDung>(context, context.NguoiDung);
+			iresponCV = new AllResponsitories<ChucVu>(context, context.ChucVu);
 			response = new AccountResponse();
         }
 		[HttpGet("[Action]")]
@@ -41,10 +43,17 @@ namespace DA_TT_API.Controllers
         {
             return await response.RegisterAdmin(hoten, image, gioitinh, Email, matkhau, sdt, ngaysinh);
         }
+        [HttpPost("[Action]")]
+        public async Task<bool> RegisterEmployee(string hoten, string image, int gioitinh, string Email, string matkhau, string sdt, DateTime ngaysinh)
+        {
+            return await response.RegisterEmployee(hoten, image, gioitinh, Email, matkhau, sdt, ngaysinh);
+        }
         [HttpPut("[Action]/{id}")]
 		public async Task<bool> UpdateThongTinCustomer(Guid id,[FromBody] NguoiDung nd)
 		{
 			var lstNguoiDung = await irespon.GetAll();
+			var lstRole = await iresponCV.GetAll();
+			var roleCus = lstRole.FirstOrDefault(x => x.TenChucVu == "Customer");
 			var nguoidung =  lstNguoiDung.FirstOrDefault(x => x.Id == id);
 			if(nguoidung == null)
 			{
@@ -53,7 +62,7 @@ namespace DA_TT_API.Controllers
 			else
 			{
 				nguoidung.HoTen = nd.HoTen;
-				nguoidung.IdChucVu = Guid.Parse("303053A2-9BA0-4A31-926A-9CFF1F0DD132");
+				nguoidung.IdChucVu = roleCus.Id;
 				nguoidung.Image = nd.Image;
 				nguoidung.GioiTinh = nd.GioiTinh;
 				nguoidung.Email = nguoidung.Email;
@@ -67,7 +76,9 @@ namespace DA_TT_API.Controllers
 		[HttpPut("[Action]/{id}")]
 		public async Task<bool> UpdateThongTinShipper(Guid id, [FromBody] NguoiDung nd)
 		{
-			var lstNguoiDung = await irespon.GetAll();
+            var lstRole = await iresponCV.GetAll();
+            var roleShip = lstRole.FirstOrDefault(x => x.TenChucVu == "Shipper");
+            var lstNguoiDung = await irespon.GetAll();
 			var nguoidung = lstNguoiDung.FirstOrDefault(x => x.Id == id);
 			if (nguoidung == null)
 			{
@@ -76,7 +87,7 @@ namespace DA_TT_API.Controllers
 			else
 			{
 				nguoidung.HoTen = nd.HoTen;
-				nguoidung.IdChucVu = Guid.Parse("37A44A14-BB52-40C1-BE65-ED05B5283364");
+				nguoidung.IdChucVu = roleShip.Id;
 				nguoidung.Image = nd.Image;
 				nguoidung.GioiTinh = nd.GioiTinh;
 				nguoidung.Email = nguoidung.Email;

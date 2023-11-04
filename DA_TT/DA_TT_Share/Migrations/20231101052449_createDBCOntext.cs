@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DA_TT_Share.Migrations
 {
-    public partial class createDB : Migration
+    public partial class createDBCOntext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace DA_TT_Share.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenChucVu = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Mota = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrangThai = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -28,6 +29,7 @@ namespace DA_TT_Share.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ten = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Mota = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrangThai = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -47,20 +49,6 @@ namespace DA_TT_Share.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HangSanXuat", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "KhoVoucher_NguoiDung",
-                columns: table => new
-                {
-                    IDNguoiDung = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IDVoucher = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SoLuong = table.Column<int>(type: "int", nullable: true),
-                    TrangThai = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_KhoVoucher_NguoiDung", x => new { x.IDNguoiDung, x.IDVoucher });
                 });
 
             migrationBuilder.CreateTable(
@@ -131,6 +119,7 @@ namespace DA_TT_Share.Migrations
                     IdHangSX = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdCoupon = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TenSanPham = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CPU = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     GiaNhap = table.Column<decimal>(type: "decimal(8,0)", nullable: true),
                     GiaBan = table.Column<decimal>(type: "decimal(8,0)", nullable: true),
@@ -175,6 +164,7 @@ namespace DA_TT_Share.Migrations
                     NgayGiaoHang = table.Column<DateTime>(type: "Date", nullable: false),
                     NgayNhanHang = table.Column<DateTime>(type: "Date", nullable: false),
                     SDTNhanHang = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TienShip = table.Column<decimal>(type: "decimal(8,0)", nullable: false),
                     TongTien = table.Column<decimal>(type: "decimal(8,0)", nullable: false),
                     TrangThai = table.Column<int>(type: "int", nullable: false),
                     IdNguoiNhan = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -227,6 +217,32 @@ namespace DA_TT_Share.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "KhoVoucher_NguoiDung",
+                columns: table => new
+                {
+                    IDNguoiDung = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IDVoucher = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SoLuong = table.Column<int>(type: "int", nullable: true),
+                    TrangThai = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KhoVoucher_NguoiDung", x => new { x.IDNguoiDung, x.IDVoucher });
+                    table.ForeignKey(
+                        name: "FK_KhoVoucher_NguoiDung_NguoiDung_IDNguoiDung",
+                        column: x => x.IDNguoiDung,
+                        principalTable: "NguoiDung",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_KhoVoucher_NguoiDung_VouCher_IDVoucher",
+                        column: x => x.IDVoucher,
+                        principalTable: "VouCher",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LienHe",
                 columns: table => new
                 {
@@ -234,10 +250,9 @@ namespace DA_TT_Share.Migrations
                     IdSanPham = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdNguoiDung = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdNguoiTrLoi = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    NoiDungNguoiDung = table.Column<string>(type: "nvarchar(1000)", nullable: true),
                     NgayLienHe = table.Column<DateTime>(type: "DateTime", nullable: true),
                     NgayTraLoi = table.Column<DateTime>(type: "DateTime", nullable: true),
-                    NoiDungLienHe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoiDungLienHe = table.Column<string>(type: "nvarchar(1000)", nullable: true),
                     NoiDungTraLoi = table.Column<string>(type: "nvarchar(1000)", nullable: true),
                     TrangThai = table.Column<int>(type: "int", nullable: true)
                 },
@@ -269,7 +284,8 @@ namespace DA_TT_Share.Migrations
                     IdDonHang = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdSanPham = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Soluong = table.Column<int>(type: "int", nullable: false),
-                    DonGia = table.Column<decimal>(type: "decimal(8,0)", nullable: false)
+                    DonGia = table.Column<decimal>(type: "decimal(8,0)", nullable: false),
+                    TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -356,6 +372,11 @@ namespace DA_TT_Share.Migrations
                 name: "IX_GioHangItem_IdSanPham",
                 table: "GioHangItem",
                 column: "IdSanPham");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KhoVoucher_NguoiDung_IDVoucher",
+                table: "KhoVoucher_NguoiDung",
+                column: "IDVoucher");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LienHe_IdNguoiDung",

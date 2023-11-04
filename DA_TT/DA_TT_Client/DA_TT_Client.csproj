@@ -23,6 +23,7 @@
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Shipper\Data\" />
     <Folder Include="Areas\Shipper\Models\" />
+    <Folder Include="wwwroot\photoLapTops\" />
   </ItemGroup>
 
 </Project>

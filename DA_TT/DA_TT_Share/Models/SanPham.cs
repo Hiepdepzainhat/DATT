@@ -15,6 +15,7 @@ namespace DA_TT_Share.Models
 		public Guid? IdHangSX { get; set; }
         public Guid? IdCoupon { get; set; }
 		public string? TenSanPham { get; set; }
+        public string? Image { get; set; }
 		public string? CPU { get; set; }
         public decimal? GiaNhap { get; set; }
         public decimal? GiaBan { get; set; }

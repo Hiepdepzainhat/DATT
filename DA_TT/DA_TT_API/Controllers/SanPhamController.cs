@@ -25,7 +25,7 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateSanPham(Guid? IdDanhMuc,Guid? IdHangSX, Guid?IdCoupon,string? tenSanPham,string? CPU,decimal? giaNhap,decimal? giaBan,int? dungLuongPin,int? HeDieuHanh, string? manHinh,int? ram,int? tongSoLuong,int? soLuongDaBan,string? thongTinBH)
+		public async Task<bool> CreateSanPham(Guid? IdDanhMuc,Guid? IdHangSX, Guid?IdCoupon,string? tenSanPham,string? image,string? CPU,decimal? giaNhap,decimal? giaBan,int? dungLuongPin,int? HeDieuHanh, string? manHinh,int? ram,int? tongSoLuong,int? soLuongDaBan,string? thongTinBH)
 		{
 			var lstsp = await irespon.GetAll();
 			var sp = lstsp.FirstOrDefault(x => x.TenSanPham == tenSanPham);
@@ -41,6 +41,7 @@ namespace DA_TT_API.Controllers
 				nsp.IdHangSX = IdHangSX;
 				nsp.IdCoupon = IdCoupon;
 				nsp.TenSanPham = tenSanPham;
+				nsp.Image = image;
 				nsp.CPU = CPU;
 				nsp.GiaNhap = giaNhap;
 				nsp.GiaBan = giaBan;
