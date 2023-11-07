@@ -13,6 +13,8 @@ namespace DA_TT_Share.Models
         public Guid Id { get; set; }
 		public Guid? IdDonHang { get; set; }
 		public Guid? IdSanPham { get; set; }
+        public string? Image { get; set; }
+        public string? Ten { get; set; }
 		public int? Soluong { get; set; }
 		public decimal? DonGia { get; set; } 
 		public decimal? TongTien { get; set; } 

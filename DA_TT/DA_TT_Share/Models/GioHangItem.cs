@@ -12,6 +12,7 @@ namespace DA_TT_Share.Models
         [Key]
         public Guid ID { get; set; }
         public string? ItemName { get; set; }
+        public string? Image { get; set; }
         public int? Soluong { get; set; }
         public decimal? ThanhTien { get; set; }
         public Guid? IdGioHang { get; set; }
