@@ -23,10 +23,10 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateGioHang(Guid? idnguoidung, Guid? IdVoucher, decimal? tongtien)
+		public async Task<bool> CreateGioHang(Guid IdGioHang,Guid? idnguoidung, Guid? IdVoucher, decimal? tongtien)
 		{
 			GioHang giohang = new GioHang();
-			giohang.Id = Guid.NewGuid();
+			giohang.Id = IdGioHang;
 			giohang.IdNguoiDung = idnguoidung;
 			giohang.IdVoucher = IdVoucher;
 			giohang.TongTien = tongtien;

@@ -23,10 +23,10 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateDonHang(Guid? IdNguoiNhan,Guid? IdShipper,Guid? IdVoucher,string? diachinhan,DateTime? ngaydathang,DateTime? ngaygiaohang,DateTime? ngaynhanhang,string? sdtnhanhang, decimal? tongtien)
+		public async Task<bool> CreateDonHang(Guid IdDonHang,Guid? IdNguoiNhan,Guid? IdShipper,Guid? IdVoucher,string? diachinhan,DateTime? ngaydathang,DateTime? ngaygiaohang,DateTime? ngaynhanhang,string? sdtnhanhang, decimal? tongtien)
 		{
 			DonHang donhang = new DonHang();
-			donhang.Id = Guid.NewGuid();
+			donhang.Id = IdDonHang;
 			donhang.IdNguoiNhan = IdNguoiNhan;
 			donhang.IdShipper = IdShipper;
 			donhang.IdVoucher = IdVoucher;
