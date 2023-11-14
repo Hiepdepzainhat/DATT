@@ -25,6 +25,24 @@ namespace DA_TT_Client.Areas.Admin.Controllers
             var lstDM = JsonConvert.DeserializeObject<List<DanhMuc>>(dataAPIDM);
             return View(lstDM);
         }
+        public IActionResult CreateDanhMuc()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateDanhMuc(DanhMuc dm)
+        {
+            string urlDM = $"https://localhost:7290/api/DanhMuc/CreateDanhMuc?ten={dm.Ten}&mota={dm.Mota}";
+            var content = new StringContent(JsonConvert.SerializeObject(dm), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(urlDM, content);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ListDanhMuc", "DanhMuc", new { area = "Admin" });
+            }
+            TempData["ErrorMessage"] = "Thêm Thất Bại";
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> DanhMucDetail(Guid Id)
         {

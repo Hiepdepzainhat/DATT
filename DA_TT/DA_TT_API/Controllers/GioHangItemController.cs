@@ -23,14 +23,16 @@ namespace DA_TT_API.Controllers
 			return await irespon.GetAll();
 		}
 		[HttpPost("[Action]")]
-		public async Task<bool> CreateGioHangItem(Guid? idgioHang, Guid? idSanPham, int? soluong, decimal? thanhtien)
+		public async Task<bool> CreateGioHangItem(Guid? idgioHang, Guid? idSanPham,string? ItemName,decimal? DonGia, int? soluong)
 		{
 			GioHangItem git = new GioHangItem();
 			git.ID = Guid.NewGuid();
 			git.IdGioHang = idgioHang;
 			git.IdSanPham = idSanPham;
-			git.Soluong = soluong;
-			git.ThanhTien = thanhtien;
+            git.ItemName = ItemName;
+			git.DonGia = DonGia;
+            git.Soluong = soluong;
+			git.ThanhTien = git.DonGia * git.Soluong;
 			await irespon.CreateItem(git);
 			return true;
 		}

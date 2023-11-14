@@ -4,6 +4,7 @@ using DA_TT_Share.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DA_TT_Share.Migrations
 {
     [DbContext(typeof(LapTopDbContext))]
-    partial class LapTopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231108070759_updateDb3")]
+    partial class updateDb3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,9 +228,6 @@ namespace DA_TT_Share.Migrations
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal?>("DonGia")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("IdGioHang")
                         .HasColumnType("uniqueidentifier");

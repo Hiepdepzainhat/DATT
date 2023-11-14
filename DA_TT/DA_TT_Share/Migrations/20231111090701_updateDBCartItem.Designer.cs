@@ -4,6 +4,7 @@ using DA_TT_Share.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DA_TT_Share.Migrations
 {
     [DbContext(typeof(LapTopDbContext))]
-    partial class LapTopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231111090701_updateDBCartItem")]
+    partial class updateDBCartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

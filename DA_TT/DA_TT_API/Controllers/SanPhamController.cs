@@ -49,6 +49,7 @@ namespace DA_TT_API.Controllers
 				nsp.HeDieuHanh = HeDieuHanh;
 				nsp.ManHinh = manHinh;
 				nsp.Ram = ram;
+				nsp.NgayNhap = DateTime.Now;
 				nsp.TongSoLuong = tongSoLuong;
 				nsp.SoLuongDaBan = soLuongDaBan;
 				nsp.SoLuongTon = tongSoLuong - soLuongDaBan;
@@ -82,6 +83,7 @@ namespace DA_TT_API.Controllers
 				nsp.ManHinh = pham.ManHinh;
 				nsp.Ram = pham.Ram;
 				nsp.TongSoLuong = pham.TongSoLuong;
+				nsp.NgayNhap = nsp.NgayNhap;
 				nsp.SoLuongDaBan = pham.SoLuongDaBan;
 				nsp.SoLuongTon = pham.TongSoLuong - pham.SoLuongDaBan;
 				nsp.ThongTinBaoHanh = pham.ThongTinBaoHanh;
