@@ -1,0 +1,4 @@
+Insert into ChucVu values ('cae2eb68-8b04-45ed-acad-b383af9bc0a6','Admin',N'No')
+Insert into ChucVu values ('65090f2a-843b-45ec-aca0-1a2cfe41ab22','Customer',N'No')
+Insert into ChucVu values ('6cce0bce-370c-451d-a5ba-dae3853f70c6','Shipper',N'No')
+Insert into ChucVu values ('1eac98a5-02ff-486f-aefd-1c20306c9382','Employee',N'No')

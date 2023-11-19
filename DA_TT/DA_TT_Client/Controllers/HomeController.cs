@@ -50,6 +50,22 @@ namespace DA_TT_Client.Controllers
 
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Shop()
+        {
+            string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
+            var responSP = await _httpClient.GetAsync(urlAPI);
+            string dataAPI = await responSP.Content.ReadAsStringAsync();
+            var lstSp = JsonConvert.DeserializeObject<List<SanPham>>(dataAPI);
+            var lstSpOk = lstSp.Where(x => x.TrangThai == 1).ToList();
+            if (lstSpOk == null)
+            {
+                return NotFound();
+            }
+            var lstSPok = lstSpOk.OrderByDescending(x => x.NgayNhap).Take(15).ToList();
+            ViewBag.lstSPok = lstSPok;
+            return View();
+        }
         public  IActionResult Login()
 		{
 			 return  View();
@@ -190,7 +206,7 @@ namespace DA_TT_Client.Controllers
         }
 
 
-        public async Task<IActionResult> AddToCart(Guid id)
+        public async Task<IActionResult> AddToCart(Guid id,int quantity)
         {
             string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
             var responSP = await _httpClient.GetAsync(urlAPI);
@@ -212,17 +228,29 @@ namespace DA_TT_Client.Controllers
             {
                 myListCartItem = JsonConvert.DeserializeObject<List<GioHangItem>>(json);
             }
-            GioHangItem item = new GioHangItem();
-            item.ID = Guid.NewGuid();
-            item.IdSanPham = laptop.Id;
-            item.IdGioHang = null;
-            item.ItemName = laptop.TenSanPham;
-            item.DonGia = laptop.GiaBan;
-            item.Image = laptop.Image;
-            item.Soluong = 1;
-            item.ThanhTien = item.DonGia * item.Soluong;
 
-            myListCartItem.Add(item);
+            var existingItem = myListCartItem.FirstOrDefault(x => x.IdSanPham == laptop.Id);
+            if (existingItem != null)
+            {
+                // Nếu sách đã có, tăng số lượng lên
+                existingItem.Soluong += quantity;
+                existingItem.ThanhTien = existingItem.DonGia * existingItem.Soluong;
+            }
+            else
+            {
+                GioHangItem item = new GioHangItem();
+                item.ID = Guid.NewGuid();
+                item.IdSanPham = laptop.Id;
+                item.IdGioHang = null;
+                item.ItemName = laptop.TenSanPham;
+                item.DonGia = laptop.GiaBan;
+                item.Image = laptop.Image;
+                item.Soluong = 1;
+                item.ThanhTien = item.DonGia * item.Soluong;
+
+                myListCartItem.Add(item);
+            }
+           
 
             string updateJson = JsonConvert.SerializeObject(myListCartItem);
             Response.Cookies.Append("MyCart", updateJson);
@@ -250,9 +278,16 @@ namespace DA_TT_Client.Controllers
             {
                 List<GioHangItem> myListCartItem = JsonConvert.DeserializeObject<List<GioHangItem>>(json);
                 ViewBag.myListCartItem = myListCartItem;
+                decimal? subTotal = 0;
+                foreach(var item in myListCartItem)
+                {
+                    subTotal += item.ThanhTien;
+                    ViewBag.subTotal = subTotal;
+                }
             }
             return View();
         }
+       
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

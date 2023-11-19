@@ -1,8 +1,8 @@
 ﻿@using DA_TT_Share.Models
 
 @{
-    ViewData["Title"] = "deTail";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "DeTail";
+    Layout = "~/Areas/Customer/Views/Shared/_CustomerLayout.cshtml";
     SanPham laptop = ViewBag.laptop as SanPham;
     int quantity = 1;
 }
@@ -219,7 +219,7 @@
     document.querySelector('#addToCart').addEventListener('click', function (event) {
         event.preventDefault();
         var quantity = document.querySelector('#quantity').value;
-        var url = '@Url.Action("AddToCart", "Home", new { id = laptop.Id })' + '?quantity=' + quantity;
+        var url = '@Url.Action("AddToCart", "CustomerHome", new { id = laptop.Id })' + '?quantity=' + quantity;
         window.location.href = url;
     });
     document.querySelector('#quantity').addEventListener('input', function () {

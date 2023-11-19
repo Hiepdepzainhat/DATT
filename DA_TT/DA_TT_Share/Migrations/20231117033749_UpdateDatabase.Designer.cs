@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DA_TT_Share.Migrations
 {
     [DbContext(typeof(LapTopDbContext))]
-    [Migration("20231111090701_updateDBCartItem")]
-    partial class updateDBCartItem
+    [Migration("20231117033749_UpdateDatabase")]
+    partial class UpdateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
