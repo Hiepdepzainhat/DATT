@@ -11,17 +11,62 @@ namespace DA_TT_Client.Controllers
 	public class HomeController : Controller
 	{
 		private  HttpClient _httpClient;
-
+        public List<GioHangItem> gioHangItems { get; set; } = new List<GioHangItem>();
 		public HomeController()
 		{
 			_httpClient =  new HttpClient();
 		}
 
-		public IActionResult Index()
-		{
-			return View();
-		}
-		public  IActionResult Login()
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            string urlAPIDanhMuc = $"https://localhost:7290/api/DanhMuc/GetAllDanhMuc";
+            var responDM = await _httpClient.GetAsync(urlAPIDanhMuc);
+            string dataAPIDM = await responDM.Content.ReadAsStringAsync();
+            var lstDM = JsonConvert.DeserializeObject<List<DanhMuc>>(dataAPIDM);
+            if (lstDM == null)
+            {
+                return NotFound();
+            }
+            var DMGaming = lstDM.FirstOrDefault(x => x.Ten == "Laptop Gaming");
+            string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
+            var responSP = await _httpClient.GetAsync(urlAPI);
+            string dataAPI = await responSP.Content.ReadAsStringAsync();
+            var lstSp = JsonConvert.DeserializeObject<List<SanPham>>(dataAPI);
+            var lstSpOk = lstSp.Where(x => x.TrangThai == 1).ToList();
+            if (lstSpOk == null)
+            {
+                return NotFound();
+            }
+            var lstSPselectNew = lstSpOk.OrderByDescending(x => x.NgayNhap).Take(6).ToList();
+            ViewBag.lstSPselectNew = lstSPselectNew;
+            var lstSPselectSLdaban = lstSpOk.OrderByDescending(x => x.SoLuongDaBan).Take(8).ToList();
+            ViewBag.lstSPselectSLdaban = lstSPselectSLdaban;
+            if (DMGaming != null)
+            {
+                var lstSpGaming = lstSpOk.Where(x => x.IdDanhMuc == DMGaming.Id);
+                ViewBag.lstSpGaming = lstSpGaming;
+            }
+
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Shop()
+        {
+            string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
+            var responSP = await _httpClient.GetAsync(urlAPI);
+            string dataAPI = await responSP.Content.ReadAsStringAsync();
+            var lstSp = JsonConvert.DeserializeObject<List<SanPham>>(dataAPI);
+            var lstSpOk = lstSp.Where(x => x.TrangThai == 1).ToList();
+            if (lstSpOk == null)
+            {
+                return NotFound();
+            }
+            var lstSPok = lstSpOk.OrderByDescending(x => x.NgayNhap).Take(15).ToList();
+            ViewBag.lstSPok = lstSPok;
+            return View();
+        }
+        public  IActionResult Login()
 		{
 			 return  View();
 		}
@@ -63,33 +108,61 @@ namespace DA_TT_Client.Controllers
 					}
 				 	if (nd.IdChucVu == cvAdmin.Id)
 					{
-						return RedirectToAction("Index", "AdminHome", new { area = "Admin" });
+                        string updatedJson = JsonConvert.SerializeObject(nd);
+                        Response.Cookies.Append("User", updatedJson);
+                        return RedirectToAction("Index", "AdminHome", new { area = "Admin" });
 					}
 					else if (nd.IdChucVu == cvCustomer.Id)
 					{
-						
-						return RedirectToAction("Index", "CustomerHome", new {area = "Customer"});
+                        string updatedJson = JsonConvert.SerializeObject(nd);
+                        Response.Cookies.Append("User", updatedJson);
+                        return RedirectToAction("Index", "CustomerHome", new {area = "Customer"});
 					}
 					else if (nd.IdChucVu == cvShipper.Id)
 					{
-                        
-						return RedirectToAction("Index","ShipperHome",new {area = "Shipper"});
+                        string updatedJson = JsonConvert.SerializeObject(nd);
+                        Response.Cookies.Append("User", updatedJson);
+                        return RedirectToAction("Index","ShipperHome",new {area = "Shipper"});
                     }
                     else if (nd.IdChucVu == cvEmployee.Id)
                     {
-                        
+                        string updatedJson = JsonConvert.SerializeObject(nd);
+                        Response.Cookies.Append("User", updatedJson);
                         return RedirectToAction("Index", "EmployeeHome", new { area = "Employee" });
                     }
 					else
 					{
-                        TempData["Login Sai"] = "Bạn đã đăng nhập bằng tài khoản Nhân Viên";
+                        TempData["Login Sai"] = "Bạn đã đăng nhập Sai";
 						return View();
                     }
                 }
 				
 			}
 		}
-		
+        [HttpGet]
+        public async Task<IActionResult> Detail(Guid Id)
+        {
+            string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
+            var responSP = await _httpClient.GetAsync(urlAPI);
+            string dataAPI = await responSP.Content.ReadAsStringAsync();
+            var lstSp = JsonConvert.DeserializeObject<List<SanPham>>(dataAPI);
+            if(lstSp == null)
+            {
+                return NotFound();
+            }
+            var lstSpOk = lstSp.Where(x => x.TrangThai == 1).ToList();
+            if (lstSpOk == null)
+            {
+                return NotFound();
+            }
+            var laptop = lstSpOk.FirstOrDefault(x => x.Id == Id);
+            if (laptop == null)
+            {
+                return NotFound();
+            }
+            ViewBag.laptop = laptop;
+            return View(laptop);
+        }
 		public IActionResult RegisterCustomer()
 		{
 			return View();
@@ -117,12 +190,105 @@ namespace DA_TT_Client.Controllers
 		{
 			return View();
 		}
+        
 		public IActionResult Privacy()
 		{
 			return View();
 		}
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("User");
+            return RedirectToAction("Index","Home");
+        }
+        public IActionResult Checkout()
+        {
+            return View();
+        }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+        public async Task<IActionResult> AddToCart(Guid id,int quantity)
+        {
+            string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
+            var responSP = await _httpClient.GetAsync(urlAPI);
+            string dataAPI = await responSP.Content.ReadAsStringAsync();
+            var lstSp = JsonConvert.DeserializeObject<List<SanPham>>(dataAPI);
+            var lstSpOk = lstSp.Where(x => x.TrangThai == 1).ToList();
+            if (lstSpOk == null)
+            {
+                return NotFound();
+            }
+            var laptop = lstSpOk.FirstOrDefault(x => x.Id == id);
+            if(laptop == null)
+            {
+                return NotFound("Sản Phẩm Đã hết hàng");
+            }
+            string json = Request.Cookies["MyCart"];
+            List<GioHangItem> myListCartItem = new List<GioHangItem>();
+            if (json != null)
+            {
+                myListCartItem = JsonConvert.DeserializeObject<List<GioHangItem>>(json);
+            }
+
+            var existingItem = myListCartItem.FirstOrDefault(x => x.IdSanPham == laptop.Id);
+            if (existingItem != null)
+            {
+                // Nếu sách đã có, tăng số lượng lên
+                existingItem.Soluong += quantity;
+                existingItem.ThanhTien = existingItem.DonGia * existingItem.Soluong;
+            }
+            else
+            {
+                GioHangItem item = new GioHangItem();
+                item.ID = Guid.NewGuid();
+                item.IdSanPham = laptop.Id;
+                item.IdGioHang = null;
+                item.ItemName = laptop.TenSanPham;
+                item.DonGia = laptop.GiaBan;
+                item.Image = laptop.Image;
+                item.Soluong = 1;
+                item.ThanhTien = item.DonGia * item.Soluong;
+
+                myListCartItem.Add(item);
+            }
+           
+
+            string updateJson = JsonConvert.SerializeObject(myListCartItem);
+            Response.Cookies.Append("MyCart", updateJson);
+            return RedirectToAction("MyCart", "Home");
+        }
+        [HttpGet]
+        public async Task<IActionResult> MyCart()
+        {
+            string urlAPI = $"https://localhost:7290/api/SanPham/GetAllSanPham";
+            var responSP = await _httpClient.GetAsync(urlAPI);
+            string dataAPI = await responSP.Content.ReadAsStringAsync();
+            var lstSp = JsonConvert.DeserializeObject<List<SanPham>>(dataAPI);
+            if(lstSp == null)
+            {
+                return NotFound();
+            }
+            var lstSpOk = lstSp.Where(x => x.TrangThai == 1).ToList();
+            if (lstSpOk == null)
+            {
+                return NotFound();
+            }
+            ViewBag.lstLapTop = lstSpOk;
+            string json = Request.Cookies["MyCart"];
+            if(json != null)
+            {
+                List<GioHangItem> myListCartItem = JsonConvert.DeserializeObject<List<GioHangItem>>(json);
+                ViewBag.myListCartItem = myListCartItem;
+                decimal? subTotal = 0;
+                foreach(var item in myListCartItem)
+                {
+                    subTotal += item.ThanhTien;
+                    ViewBag.subTotal = subTotal;
+                }
+            }
+            return View();
+        }
+       
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DA_TT_Share.Migrations
 {
-    public partial class createDBCOntext : Migration
+    public partial class UpdateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,6 +122,7 @@ namespace DA_TT_Share.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CPU = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     GiaNhap = table.Column<decimal>(type: "decimal(8,0)", nullable: true),
+                    NgayNhap = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GiaBan = table.Column<decimal>(type: "decimal(8,0)", nullable: true),
                     DungLuongPin = table.Column<int>(type: "int", nullable: true),
                     HeDieuHanh = table.Column<int>(type: "int", nullable: true),
@@ -283,6 +284,8 @@ namespace DA_TT_Share.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdDonHang = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdSanPham = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ten = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Soluong = table.Column<int>(type: "int", nullable: false),
                     DonGia = table.Column<decimal>(type: "decimal(8,0)", nullable: false),
                     TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
@@ -308,6 +311,8 @@ namespace DA_TT_Share.Migrations
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ItemName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DonGia = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Soluong = table.Column<int>(type: "int", nullable: false),
                     ThanhTien = table.Column<decimal>(type: "decimal(8,0)", nullable: false),
                     IdGioHang = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

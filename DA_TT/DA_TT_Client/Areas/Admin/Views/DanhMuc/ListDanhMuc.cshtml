@@ -7,13 +7,11 @@
 }
 
 <h1>Danh Sách Danh Mục</h1>
-
+<a asp-action="CreateDanhMuc" class="btn btn-primary">Thêm Danh Mục</a>
 <table class="table" id="tb_danhmuc">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
+        
             <th>
                 @Html.DisplayNameFor(model => model.Ten)
             </th>
@@ -29,9 +27,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Ten)
             </td>

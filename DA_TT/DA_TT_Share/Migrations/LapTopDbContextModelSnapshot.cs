@@ -172,9 +172,15 @@ namespace DA_TT_Share.Migrations
                     b.Property<Guid?>("IdSanPham")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Soluong")
                         .IsRequired()
                         .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("TongTien")
                         .HasColumnType("decimal(18,2)");
@@ -221,11 +227,17 @@ namespace DA_TT_Share.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("DonGia")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid?>("IdGioHang")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdSanPham")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemName")
                         .IsRequired()
@@ -392,6 +404,9 @@ namespace DA_TT_Share.Migrations
 
                     b.Property<string>("ManHinh")
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("NgayNhap")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("Ram")
                         .HasColumnType("int");

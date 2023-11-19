@@ -18,6 +18,7 @@ namespace DA_TT_Share.Models
         public string? Image { get; set; }
 		public string? CPU { get; set; }
         public decimal? GiaNhap { get; set; }
+        public DateTime? NgayNhap { get; set; }
         public decimal? GiaBan { get; set; }
         public int? DungLuongPin { get; set; }
         public int? HeDieuHanh { get; set; }

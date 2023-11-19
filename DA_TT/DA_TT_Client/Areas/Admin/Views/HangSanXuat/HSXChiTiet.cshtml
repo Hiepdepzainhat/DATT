@@ -1,0 +1,32 @@
+﻿@model DA_TT_Share.Models.HangSanXuat
+
+@{
+    ViewData["Title"] = "HSXChiTiet";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <h4>Hãng Sản Xuất Chi Tiết</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TenHangSanXuat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenHangSanXuat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Desciption)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Desciption)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+    </dl>
+</div>
+

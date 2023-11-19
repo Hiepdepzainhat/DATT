@@ -24,14 +24,14 @@ body
     width: 100%;
 }
 
-.navigation{
+.navigation {
     position: fixed;
     width: 300px;
     height: 100%;
     background: var(--blue);
     border-left: 10px solid var(--blue);
     transition: 0.5s;
-    overflow: hidden;
+    overflow-y: auto !important;
 }
     .navigation.active {
         width: 0px;
